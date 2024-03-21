@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <title>Flores Amarillas</title>
+</head>
+<body>
+    <div id="youtube-player"></div>
+    <div class="background"></div>
+    <div class="stars"></div>
+    <div class="flower">
+        <div class="text-above"><h3>Para ti</h3></div>
+        <div class="mid"></div>
+        <div class="Petal1 p1"></div>
+        <div class="Petal1 p2"></div>
+        <div class="Petal1 p3"></div>
+        <div class="Petal1 p4"></div>
+        <div class="Petal2 p1"></div>
+        <div class="Petal2 p2"></div>
+        <div class="Petal2 p3"></div>
+        <div class="Petal2 p4"></div>
+        <div class="Petal3 p1"></div>
+        <div class="Petal3 p2"></div>
+        <div class="Petal3 p3"></div>
+        <div class="Petal3 p4"></div>
+        <div class="text-below">❤️🐝<h3></h3> </div>
+    </div>
+    <script>
+        var player;
+        var isPlaying = false;
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtube-player', {
+                height: '0',
+                width: '0',
+                videoId: '7sungKrbAFc', // Nuevo ID del video
+                playerVars: {
+                    autoplay: 1, // Cambiado a 1 para reproducir automáticamente
+                    controls: 0,
+                    showinfo: 0,
+                    modestbranding: 1,
+                    rel: 0,
+                    enablejsapi: 1,
+                    start: 0,
+                },
+                events: {
+                    'onReady': onPlayerReady,
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            // Pausar el video en espera de la interacción del usuario
+            event.target.pauseVideo();
+
+            // Agregar un event listener para hacer clic en cualquier parte de la pantalla
+            document.body.addEventListener('click', function() {
+                if (!isPlaying) {
+                    event.target.playVideo();
+                    isPlaying = true;
+                    changeBackground();
+                }
+            });
+        }
+
+        function changeBackground() {
+            // Cambiar el fondo con colores automáticamente (aquí puedes personalizar los colores)
+            var background = document.querySelector('.background');
+            var colors = ['#808080', '#800080', '#0000FF']; // Gris, Morado, Azul
+            var currentIndex = 0;
+
+            setInterval(function() {
+                background.style.backgroundColor = colors[currentIndex];
+                currentIndex = (currentIndex + 1) % colors.length;
+            }, 1000); // Cambiar el color cada segundo
+        }
+
+        // Llamar a la función para iniciar el cambio de colores automáticamente
+        window.onload = generateStars;
+
+        // Función para generar estrellas aleatorias
+        function generateStars() {
+            const numStars = 50; // Número de estrellas que deseas mostrar
+            const container = document.querySelector('.stars');
+
+            for (let i = 0; i < numStars; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.left = Math.random() * window.innerWidth + 'px'; // Posición horizontal aleatoria
+                star.style.top = Math.random() * window.innerHeight + 'px'; // Posición vertical aleatoria
+                container.appendChild(star);
+            }
+        }
+    </script>
+</body>
+</html>
+
+
+
+
